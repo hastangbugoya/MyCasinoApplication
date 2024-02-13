@@ -15,6 +15,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,8 +26,8 @@ import com.example.mycasinoapplication.viewmodel.BaccaratViewModel
 @Composable
 @coil.annotation.ExperimentalCoilApi
 fun BaccaratScreen(viewModel: BaccaratViewModel) {
-    val bankerHand by viewModel.bankerHand
-    val playerHand by viewModel.playerHand
+    val bankerHand by viewModel.bankerHand.collectAsState()
+    val playerHand by viewModel.playerHand.collectAsState()
     Column(modifier = Modifier.fillMaxSize()) {
         Row(modifier = Modifier.fillMaxWidth().height(200.dp).background(Color.Green).padding(8.dp)) {
             LazyRow() {

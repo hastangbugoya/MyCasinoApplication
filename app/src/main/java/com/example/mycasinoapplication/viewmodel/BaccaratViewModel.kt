@@ -1,20 +1,20 @@
 package com.example.mycasinoapplication.viewmodel
 
 import android.util.Log
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.mycasinoapplication.R
 import com.example.mycasinoapplication.model.Card
 import com.example.mycasinoapplication.model.DrawRecepient
 import com.example.mycasinoapplication.model.Suits
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class BaccaratViewModel : ViewModel() {
     private val deck = mutableListOf<Card>()
-    private val _bankerHand = mutableStateOf(mutableListOf<Card>())
-    val bankerHand: MutableState<MutableList<Card>> get() = _bankerHand
-    private val _playerHand = mutableStateOf(mutableListOf<Card>())
-    val playerHand: MutableState<MutableList<Card>> get() = _playerHand
+    private val _bankerHand = MutableStateFlow<MutableList<Card>>(mutableListOf())
+    val bankerHand = _bankerHand.asStateFlow()
+    private val _playerHand = MutableStateFlow<MutableList<Card>>(mutableListOf())
+    val playerHand = _playerHand.asStateFlow()
 
     fun drawCard(recipient: DrawRecepient) {
         val index = (1..1000000).random().mod(deck.size)
