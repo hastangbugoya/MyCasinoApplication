@@ -33,9 +33,9 @@ fun BaccaratScreen(viewModel: BaccaratViewModel) {
             LazyRow() {
                 Log.d("Meow", "banker: ${bankerHand.size} ${(bankerHand?.sumOf { it.value })?.mod(10)}")
                 items(bankerHand) {
-                    Log.d("Meow", "Banker ${it.value}${it.suit}")
+                    Log.d("Meow", "Banker ${it.getValueName()} ${it.suit}")
                     val painter = rememberImagePainter(data = it.cardImage)
-                    Image(painter, null, modifier = Modifier.width(100.dp))
+                    Image(painter, "Banker ${it.getValueName()} ${it.suit}", modifier = Modifier.width(100.dp))
                 }
             }
         }
@@ -43,9 +43,9 @@ fun BaccaratScreen(viewModel: BaccaratViewModel) {
             LazyRow() {
                 Log.d("Meow", "banker: ${playerHand.size} ${(playerHand.sumOf { it.value }).mod(10)}")
                 items(playerHand) {
-                    Log.d("Meow", "Player ${it.value}${it.suit}")
+                    Log.d("Meow", "Player ${it.getValueName()} ${it.suit}")
                     val painter = rememberImagePainter(data = it.cardImage)
-                    Image(painter, null, modifier = Modifier.width(100.dp))
+                    Image(painter, "Player ${it.getValueName()} ${it.suit}", modifier = Modifier.width(100.dp))
                 }
             }
         }
