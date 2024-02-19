@@ -1,6 +1,6 @@
 package com.example.mycasinoapplication.model
 
-data class Card(val suit: Suits, val cardImage: Int, val value: Int) : java.io.Serializable {
+data class Card(val suit: Suits, val cardImage: Int, val value: Int, var showFront: Boolean = true) : java.io.Serializable {
     fun getValueName(): String {
         return when (val c: Int = value) {
             1 -> "Ace"

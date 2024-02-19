@@ -11,6 +11,8 @@ import kotlinx.coroutines.flow.asStateFlow
 
 class BaccaratViewModel : ViewModel() {
     private val deck = mutableListOf<Card>()
+    private var _deckCount = MutableStateFlow<Int>(0)
+    var deckCount = _deckCount.asStateFlow()
     private var _playerTotal = MutableStateFlow<Int>(0)
     var playerTotal = _playerTotal.asStateFlow()
     private var _bankerTotal = MutableStateFlow<Int>(0)
@@ -34,6 +36,7 @@ class BaccaratViewModel : ViewModel() {
             }
         }
         deck.removeAt(index)
+        _deckCount.value = deck.size
     }
 
     fun clearHands() {
@@ -62,6 +65,7 @@ class BaccaratViewModel : ViewModel() {
         for (i in 1..deckCount) {
             addDeck()
         }
+        _deckCount.value = deck.size
     }
 
     fun hit(hitter: DrawRecepient) {
@@ -128,4 +132,5 @@ class BaccaratViewModel : ViewModel() {
         deck.add(Card(Suits.DIAMOND, R.drawable.d12b, 0))
         deck.add(Card(Suits.DIAMOND, R.drawable.d13b, 0))
     }
+
 }
