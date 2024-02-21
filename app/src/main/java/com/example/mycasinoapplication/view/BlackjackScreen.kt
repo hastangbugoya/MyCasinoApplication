@@ -7,14 +7,12 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.FloatingActionButton
@@ -28,30 +26,24 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
 import com.example.mycasinoapplication.R
-import com.example.mycasinoapplication.viewmodel.ThreeCardPokerViewModel
+import com.example.mycasinoapplication.viewmodel.BlackjackViewModel
 
 @Composable
-fun ThreeCardPokerScreen(viewModel: ThreeCardPokerViewModel) {
+fun BlackjackScreen(viewModel: BlackjackViewModel) {
     Box(
         modifier = Modifier.background(Color(0xFF234D23)).fillMaxSize(),
     ) {
-        Column(modifier = Modifier.fillMaxSize()) {
-            ThreeCardPokerDealerHand(viewModel, 150)
-        }
+        DealerHand(viewModel = viewModel, height = 120)
     }
 }
 
 @Composable
-fun ThreeCardPokerDealerHand(viewModel: ThreeCardPokerViewModel, height: Int) {
-    val banker by viewModel.banker.collectAsState()
-    val players by viewModel.players.collectAsState()
-    val shoe by viewModel.shoe.collectAsState()
+fun DealerHand(viewModel: BlackjackViewModel, height: Int) {
+    val dealer by viewModel.dealer.collectAsState()
     Column(
         modifier = Modifier.fillMaxWidth().background(
             Color(
@@ -69,9 +61,9 @@ fun ThreeCardPokerDealerHand(viewModel: ThreeCardPokerViewModel, height: Int) {
             color = Color.Red,
         )
         Box() {
-            Log.d("Meow", "Dealer hand : ${banker.cards.size}")
+            Log.d("Meow", "Dealer hand : ${dealer.cards.size}")
             LazyRow(modifier = Modifier.fillMaxWidth().padding(8.dp).height(height.dp)) {
-                items(banker.cards) {
+                items(dealer.cards) {
                     Log.d("Meow", "Banker ${it.getValueName()} ${it.suit} ${it.showFront}")
                     val painter = rememberImagePainter(data = it.cardImage)
                     Column() {
@@ -90,7 +82,7 @@ fun ThreeCardPokerDealerHand(viewModel: ThreeCardPokerViewModel, height: Int) {
             }
             FloatingActionButton(
                 onClick = {
-                    viewModel.deal()
+//                    viewModel.deal()
                     Log.d("Meow", "DEal!!!")
                 },
                 Modifier.align(Alignment.BottomEnd).padding(16.dp).size(70.dp),
@@ -111,55 +103,5 @@ fun ThreeCardPokerDealerHand(viewModel: ThreeCardPokerViewModel, height: Int) {
                 ),
             )
         }
-        Box(
-            modifier = Modifier.fillMaxSize(),
-        ) {
-            LazyRow(
-                modifier = Modifier.fillMaxSize(),
-            ) {
-                items(players) {
-                    Log.d("Meow", "players count: ${players.size}")
-                    Box(
-                        modifier = Modifier.fillMaxWidth(),
-                    ) {
-                        Column(
-                            modifier = Modifier.padding(4.dp).width(100.dp).fillMaxHeight().background(Color(0xFF193919)).padding(8.dp),
-                        ) {
-                            Text("Player", color = Color.Yellow, fontWeight = FontWeight.Bold)
-                            LazyColumn(modifier = Modifier.fillMaxWidth()) {
-                                items(it.cards) {
-                                    val painter = rememberImagePainter(data = it.cardImage)
-                                    Column() {
-                                        Box(
-                                            modifier = Modifier.fillMaxHeight().align(Alignment.CenterHorizontally),
-                                        ) {
-                                            this@Column.AnimatedVisibility(
-                                                visible = true,
-                                                enter = fadeIn(initialAlpha = 0.2f),
-                                            ) {
-                                                Image(
-                                                    painter,
-                                                    "player ${it.getValueName()} ${it.suit}",
-                                                    modifier = Modifier.height(120.dp).padding(4.dp),
-                                                )
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
     }
-}
-
-@Preview
-@Composable
-fun ThreeCardPokerPreview() {
-    val myViewModel = ThreeCardPokerViewModel()
-    myViewModel.resetShoe()
-    myViewModel.dealDealerHand()
-    ThreeCardPokerScreen(myViewModel)
 }

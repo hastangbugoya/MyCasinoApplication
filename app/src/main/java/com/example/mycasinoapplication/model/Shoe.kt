@@ -22,14 +22,17 @@ class Shoe(val myGame: Game = Game.BACCARAT) {
     private fun addDeck() {
         val kingValue = when (myGame) {
             Game.BACCARAT -> 0
+            Game.BLACKJACK -> 10
             else -> 13
         }
         val queenValue = when (myGame) {
             Game.BACCARAT -> 0
+            Game.BLACKJACK -> 10
             else -> 12
         }
         val jackValue = when (myGame) {
             Game.BACCARAT -> 0
+            Game.BLACKJACK -> 10
             else -> 11
         }
         deck.add(Card(Suits.CLUB, R.drawable.clubs_ace, 1, false))

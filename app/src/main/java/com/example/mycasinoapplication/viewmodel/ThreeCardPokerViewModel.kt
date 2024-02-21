@@ -35,11 +35,18 @@ class ThreeCardPokerViewModel() : ViewModel() {
 
     fun dealDealerHand() {
         Log.d("Meow", "3 card > deal dealer hand")
-        _banker.value = TCPPlayer(mutableListOf<Card>().apply {
-            add(_shoe.value.drawCard())
-            add(_shoe.value.drawCard())
-            add(_shoe.value.drawCard())
-        },0,0,0,0, true)
+        _banker.value = TCPPlayer(
+            mutableListOf<Card>().apply {
+                add(_shoe.value.drawCard())
+                add(_shoe.value.drawCard())
+                add(_shoe.value.drawCard())
+            },
+            0,
+            0,
+            0,
+            0,
+            true,
+        )
     }
 
     fun deal() {
