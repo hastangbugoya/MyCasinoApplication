@@ -29,6 +29,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
@@ -53,7 +54,7 @@ fun UTHScreen(viewModel: UTHViewModel) {
                 modifier = Modifier.fillMaxSize(),
             ) {
                 Log.d("Meow", "UTHScreen > display dealer")
-                Column(modifier = Modifier.background(Color(0xFF214221)).padding(4.dp)) {
+                Column(modifier = Modifier.background(Color(0xFF193919)).padding(4.dp)) {
                     UTHPlayerHand(dealer, "DEALER")
                 }
                 Log.d("Meow", "UTHScreen > display players")
@@ -93,19 +94,19 @@ fun CommunityHand(viewModel: UTHViewModel, height: Int) {
     Column(
         modifier = Modifier
             .height(height = (height).dp)
-            .fillMaxWidth().border(2.dp, Color.Red)
-            .background(color = Color.Transparent, shape = RoundedCornerShape(16.dp)),
+            .fillMaxWidth().border(2.dp, Color.Yellow).background(Color(R.color.defaultgreen))
+            .background(color = Color.Transparent, shape = RoundedCornerShape(16.dp))
+            .clip(shape = RoundedCornerShape(15.dp, 15.dp, 0.dp, 0.dp)),
     ) {
         Text(
             "Community",
             modifier = Modifier.fillMaxWidth()
-                .background(Color.Transparent)
-                .padding(4.dp),
+                .padding(8.dp),
             fontSize = 16.sp,
             fontFamily = FontFamily.SansSerif,
-            color = Color.Red,
+            color = Color.Yellow,
         )
-        Box() {
+        Box {
             LazyRow(modifier = Modifier.fillMaxWidth().padding(8.dp)) {
                 Log.d("Meow", "UTHScreen > community card count: ${community.size}")
                 items(community) {
@@ -158,8 +159,7 @@ fun UTHPlayers(viewModel: UTHViewModel) {
     LazyRow() {
         itemsIndexed(players) { index, uTHP ->
             Box {
-
-                UTHPlayerHand(uTHPlayer = uTHP, "SEAT ${index+1}")
+                UTHPlayerHand(uTHPlayer = uTHP, "SEAT ${index + 1}")
             }
         }
     }

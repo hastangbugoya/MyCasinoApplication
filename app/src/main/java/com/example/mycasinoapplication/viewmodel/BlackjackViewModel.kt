@@ -107,4 +107,12 @@ class BlackjackViewModel : ViewModel() {
         }
         _players.value = tempList
     }
+    fun hit(p: BlackjackPlayer) {
+        _players.value.forEach {
+            if (it == p) {
+                it.cards.add(_shoe.value.drawCard())
+            }
+        }
+        _players.value = players.value
+    }
 }
